@@ -1,3 +1,15 @@
+###############################################################################
+#
+#                             2015 (C) ReggioG
+#
+#                           Licensed under WTFPL
+#               Do What the Fuck You Want to Public License
+#                          http://www.wtfpl.net/
+#
+#              Author is nor liable for misuse; Use carefully!
+#
+###############################################################################
+
 import mechanize
 
 def new_browser():
