@@ -9,6 +9,12 @@
 #              Author is nor liable for misuse; Use carefully!
 #
 ###############################################################################
+#
+# You have to change the url below and the fill_form function.
+#
+###############################################################################
+
+url = 'https://docs.google.com/forms/d/e/1FAIpQLScX5FkvJG9OpqbLpSBOR5ulbi-PY93_84SkG5NMOsOBA6YLQA/viewform'
 
 import mechanize
 
@@ -21,7 +27,6 @@ def new_browser():
 	return browser
 
 if __name__ == "__main__":
-	url = 'https://docs.google.com/forms/d/e/1FAIpQLScX5FkvJG9OpqbLpSBOR5ulbi-PY93_84SkG5NMOsOBA6YLQA/viewform'
 	browser = new_browser()
 	browser.open(url)
 	

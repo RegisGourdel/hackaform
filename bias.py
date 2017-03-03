@@ -1,8 +1,6 @@
- 
 ###############################################################################
 #
-#                          2015 (C) Kushara Singh
-#                         kushagra14056@iiitd.ac.in
+#                             2015 (C) ReggioG
 #
 #                           Licensed under WTFPL
 #               Do What the Fuck You Want to Public License
@@ -12,25 +10,11 @@
 #
 ###############################################################################
 #
-#	A dumb script to spam a google form.
-#
-#	What it can spam?	(1)
-#
-#		- Single page forms
-#		- The following controls :
-#			- text
-#			- textarea
-#			- select
-#			- radio
-#			- checkbox
-#
-#	What it cannot spam?
-#
-#		- Multi page forms
-#		- Forms that require login (duh!)
-#		- A google form which has stuff not mentioned in (1)
+# You have to change the url below and the fill_form function.
 #
 ###############################################################################
+
+url = 'https://docs.google.com/forms/d/e/1FAIpQLScX5FkvJG9OpqbLpSBOR5ulbi-PY93_84SkG5NMOsOBA6YLQA/viewform'
 
 import random
 import string
@@ -38,22 +22,22 @@ import sys
 import mechanize
 
 def fill(control):
-
 	""" Fills up radio, checkbox and select control with a random option """
 
 	total = len(control.get_items())
 	value_to_set = str(control.get_items()[random.randint(1,total - 1)])
 	control.value = [value_to_set]
 
-def random_text(control, length):
+def fill_radio_control(control,parameters):
+	n = len(parameters)
+	#TODO
 
+def random_text(control, length):
 	""" Fills up a text control with a random string of length "length" """
 
-	control.value = ''.join(random.choice(string.ascii_uppercase + string.digits)
-					for _ in range(length))
+	control.value = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
 
 def new_browser():
-
 	""" Returns a new mechanize browser instance """
 
 	browser = mechanize.Browser()
@@ -63,8 +47,7 @@ def new_browser():
 	return browser
 
 def fill_form(form):
-
-	""" Fills up the form with random bs """
+	""" Fills up the form : the function to be modified"""
 	
 	control = form.find_control("entry.327270975")
 	control.readonly = False
@@ -84,7 +67,7 @@ def fill_form(form):
 	control = form.find_control("entry.755134921.other_option_response")
 	control.readonly = False
 	control.disabled = False
-	control.value = "Regis"
+	control.value = "MyAnswer"
 
 	val = "2094587968"
 	for control in form.controls:
@@ -97,8 +80,7 @@ def fill_form(form):
 			val = "0"
 
 
-def spam_form(url, times = 1):
-
+def hcak_form(url, times = 1):
 	""" Spams a google form at url "times" number of times """
 
 	browser = new_browser()
@@ -129,7 +111,6 @@ if __name__ == "__main__":
 		print "run script as\n'python %s 'url' (in quotes) number_of_times_you_want_to_spam'\n" %(__file__)
 		exit()
 
-	url = 'https://docs.google.com/forms/d/e/1FAIpQLScD87mgFc3n5flkez_zPK-YDAmHJMXmcJRvj666m3Fyb3FJiQ/viewform'
 	times = int(sys.argv[1])
-	spam_form(url, times)
+	hack_form(url, times)
 
