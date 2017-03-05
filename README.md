@@ -39,13 +39,17 @@ About
     - select
     - radio
     - checkbox
+    - list
+    - date
+    - hour
+    - grid
+    - enumerations
 
-* What can it not spam?
+* What can it not bias?
   
   - Multi page forms
-  - Forms that require login (Duh!)
-  - A google form which has stuff not mentioned in (1)
-  
+  - Forms that require login
+
 * Credits to kushagra14056 for his "Google Form Spammer" which helped a lot.
 
 Issues

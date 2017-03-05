@@ -1,6 +1,6 @@
 ###############################################################################
 #
-#                             2015 (C) ReggioG
+#                             2017 (C) ReggioG
 #
 #                           Licensed under WTFPL
 #               Do What the Fuck You Want to Public License
@@ -19,7 +19,6 @@ url = 'https://docs.google.com/forms/d/e/1FAIpQLScX5FkvJG9OpqbLpSBOR5ulbi-PY93_8
 import mechanize
 
 def new_browser():
-
 	""" Returns a new mechanize browser instance """
 	browser = mechanize.Browser()
 	browser.set_handle_robots(False)
