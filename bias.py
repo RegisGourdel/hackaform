@@ -21,6 +21,8 @@ import string
 import sys
 import mechanize
 
+random.seed()
+
 def fill(control):
 	""" Fills up radio, checkbox and select control with a random option """
 
@@ -28,18 +30,39 @@ def fill(control):
 	value_to_set = str(control.get_items()[random.randint(1,total - 1)])
 	control.value = [value_to_set]
 
-def fill_radio_control(control,parameters):
-	n = len(parameters)
+def pickAnswer(params):
+	""" Based on given probabilities this function pick a random answer. """
+	sumProba = sum(float(x[1]) for x in params)
+	r = random.random()
+	for x in params:
+		r = r - float(x[1]) / sumProba
+		if r <= 0:
+			return x[0], x[2]
+
+def fill_radio_control(form, controlName, params):
+	control = form.find_control(controlName)
+	control.readonly = False
+	control.disabled = False
+	ans, other = pickAnswer(params)
+	if not(other):
+		control.value = ans
+	else:
+		control.value = "__other_option__"
+		control = form.find_control(controlName + ".other_option_response")
+		control.readonly = False
+		control.disabled = False
+		control.value = ans
+
+def fill_check_box_control(form, controlName, params):
+	ans, other = pickAnswer(params)
 	#TODO
 
 def random_text(control, length):
 	""" Fills up a text control with a random string of length "length" """
-
 	control.value = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
 
 def new_browser():
 	""" Returns a new mechanize browser instance """
-
 	browser = mechanize.Browser()
 	browser.set_handle_robots(False)
 	browser.set_handle_refresh(False)
@@ -49,38 +72,21 @@ def new_browser():
 def fill_form(form):
 	""" Fills up the form : the function to be modified"""
 	
-	control = form.find_control("entry.327270975")
-	control.readonly = False
-	control.disabled = False
-	control.value = "Jean-Truc"
-	
-	control = form.find_control("entry.1371494928")
-	control.readonly = False
-	control.disabled = False
-	control.value = '1A'
-	
-	control = form.find_control("entry.755134921")
-	control.readonly = False
-	control.disabled = False
-	control.value = "__other_option__"
-	
-	control = form.find_control("entry.755134921.other_option_response")
-	control.readonly = False
-	control.disabled = False
-	control.value = "MyAnswer"
+	params = [ ["Option 1", 1.0, False], ["Option 2", 2.0, False], ["Option 3", 3.0, False] ]
+	fill_radio_control(form, "entry.1718133627", params)
 
-	val = "2094587968"
-	for control in form.controls:
-		if control.name == 'entry.2094587968':
-			control.readonly = False
-			control.disabled = False
-			print(control.value)
-			#value_to_set = str(control.get_items()[2])
-			control.value = val
-			val = "0"
+	#val = "2094587968"
+	#for control in form.controls:
+		#if control.name == 'entry.2094587968':
+			#control.readonly = False
+			#control.disabled = False
+			#print(control.value)
+			##value_to_set = str(control.get_items()[2])
+			#control.value = val
+			#val = "0"
 
 
-def hcak_form(url, times = 1):
+def hack_form(url, times = 1):
 	""" Spams a google form at url "times" number of times """
 
 	browser = new_browser()
@@ -113,4 +119,3 @@ if __name__ == "__main__":
 
 	times = int(sys.argv[1])
 	hack_form(url, times)
-
